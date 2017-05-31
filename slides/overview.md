@@ -3,7 +3,6 @@
 ## JavaScript
 
 - [JavaScript Refresher](./js-refresher.md)
-- [TypeScript Intro](./ts-intro.md)
 <br><br>
 
 ## RxJS
