@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+  <div class="panel-heading">{{user.firstName}} {{user.lastName}}</div>
+  <div class="panel-body">
+    <img [src]="user.image" width="100%">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td><strong>Company:</strong></td>
+                <td>{{user.company}}</td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td>{{user.email}}</td>
+            </tr>
+            <tr>
+                <td><strong>Age:</strong></td>
+                <td>{{user.age}}</td>
+            </tr>
+            <tr>
+                <td><strong>Street:</strong></td>
+                <td>{{user.address?.street}}</td>
+            </tr>
+            <tr>
+                <td><strong>City:</strong></td>
+                <td>{{user.address?.city}}</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>

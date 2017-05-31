@@ -1,0 +1,9 @@
+<h3>Panel View</h3>
+<!--<div *ngIf="errorMessage" class="alert alert-warning">
+  {{errorMessage}}
+</div>-->
+<div class="flex-grid">
+  <div class="col" *ngFor="let user of users">
+    <user [user]="user"></user>
+  </div>
+</div>

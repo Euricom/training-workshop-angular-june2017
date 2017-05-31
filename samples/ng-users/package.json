@@ -1,0 +1,43 @@
+{
+  "name": "ng-app-api",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "serve": "ng serve --port 8081 --open --proxy-config proxy.config.json",
+    "build": "ng build",
+    "build:prod": "ng build --target=production --environment=prod",
+    "build:prod:aot": "ng build --target=production --environment=prod --aot=true",
+    "start:server": "nodemon ./server/server.js",
+    "lint": "ng lint"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/router": "^4.0.0",
+    "body-parser": "^1.17.1",
+    "bootstrap": "^3.3.7",
+    "core-js": "^2.4.1",
+    "express": "^4.15.2",
+    "faker": "^4.1.0",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0",
+    "rxjs": "^5.1.0",
+    "underscore": "^1.8.3",
+    "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@angular/cli": "1.0.1",
+    "@angular/compiler-cli": "^4.0.0",
+    "@types/node": "~6.0.60",
+    "codelyzer": "~2.0.0",
+    "ts-node": "~2.0.0",
+    "tslint": "~4.5.0",
+    "typescript": "2.2.x"
+  }
+}

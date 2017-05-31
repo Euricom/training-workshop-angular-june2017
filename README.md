@@ -1,2 +1,4 @@
 # training-workshop-angular-june2017
-Small angular workshop with focus on RxJS &amp; Unit Testing
+Short angular workshop with focus on RxJS & Unit Testing
+
+[Goto Overview](./slides/overview.md)

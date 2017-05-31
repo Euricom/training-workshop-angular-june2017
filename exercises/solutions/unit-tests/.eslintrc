@@ -1,0 +1,14 @@
+{
+  "extends": "airbnb-base",
+  "globals": {},
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "no-console": [0, ""],  // allow console.log
+    "semi": [2, "never"]    // no semicolon
+    // "indent": [2, 4]     // tab = 4 spaces
+  }
+}

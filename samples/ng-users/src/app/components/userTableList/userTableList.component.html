@@ -1,0 +1,28 @@
+<div>
+  <h3>Table View</h3>
+  <div *ngIf="errorMessage" class="alert alert-warning">
+    {{errorMessage}}
+  </div>
+
+  <button class="btn btn-default" (click)="onAdd()">Add</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>First</th>
+        <th>Last</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users$ | async">
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td><a [routerLink]="['/detail', user.id]">{{user.email}}</a></td>
+        <td>{{user.age}}</td>
+        <td><a (click)="onDelete(user)">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
