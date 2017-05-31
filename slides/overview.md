@@ -1,6 +1,6 @@
 # Angular Workshop
 
-## Pre-requisite
+## Prerequisite
 
 - [JavaScript - Refresher](./js-refresher.md)
 - [Angular - Getting Started](./angular-getting-started.md)
