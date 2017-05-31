@@ -1,8 +1,10 @@
 # Angular Workshop
 
-## JavaScript
+## Pre-requisite
 
-- [JavaScript Refresher](./js-refresher.md)
+- [JavaScript - Refresher](./js-refresher.md)
+- [Angular - Getting Started](./angular-getting-started.md)
+- [Angular - Dependency Injection](./angular-indepth-di.md)
 <br><br>
 
 ## RxJS
