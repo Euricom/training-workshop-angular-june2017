@@ -223,12 +223,6 @@ Ran all test suites.
 ✨  Done in 2.58s.
 ```
 
-----
-
-## vscode-jest
-
-![vscode-jest](https://github.com/orta/vscode-jest/raw/master/images/vscode-jest.gif)
-
 ---
 
 # Unit Testing
@@ -376,6 +370,44 @@ With custom implementation
 // throw an error
 jest.fn().mockImplementation(() => { throw new Error('bad') })
 ```
+
+## SnapShop Testing
+
+```js
+export function formatList(listName, items, key) {
+  return `These are the items in the ${listName}:${
+    items.reduce((itemsList, item) => {
+      return `${itemsList}\n  - ${key ? item[key] : item}`
+    }, '')
+  }`
+}
+```
+
+```js
+import { formatList } from './format-list'
+
+test('can format a list', () => {
+  const formattedList = formatList(
+    'Star Wars Names',
+    [
+      {name: 'Qui-Gon Jinn'},
+      {name: 'Chewbacca'},
+      {name: 'Han Solo'},
+      {name: 'Luke Skywalker'},
+    ],
+    'name'
+  )
+  expect(formattedList).toMatchSnapshot()
+})
+```
+
+To update the snapshot
+
+```bash
+jest --updateSnapshot
+```
+
+> You need to commit all snapshots and keep them in version control
 
 ----
 
@@ -662,6 +694,32 @@ describe('AppComponent', () => {
 
 ----
 
+## Component testing - with snapshots
+
+```js
+import { TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
+import { AppComponent } from './app.component'
+
+describe('AppComponent', () => {
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+          declarations: [AppComponent]
+        })
+    })
+
+    it('should render correctly', () => {
+        const fixture = TestBed.createComponent(AppComponent)
+        fixture.detectChanges()
+        expect(fixture).toMatchSnapshot()
+    })
+
+})
+```
+
+----
+
 ## Component testing
 
 Interact with the component
@@ -689,5 +747,6 @@ expect(onIncrementClick.called).toEqual(true)
 
 # Resources
 
+- [Testing Angular 2.0.x Services and Http with Jasmine and Karma](http://chariotsolutions.com/blog/post/testing-angular-2-0-x-services-http-jasmine-karma/)
 - [https://www.xfive.co/blog/testing-angular-faster-jest/](https://www.xfive.co/blog/testing-angular-faster-jest/)
 - [Angular CLI with Jest](https://github.com/angular/angular-cli/issues/4543)
