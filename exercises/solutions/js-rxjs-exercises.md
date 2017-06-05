@@ -99,6 +99,41 @@ const sub = stream$
 
 ## Combine observables
 
+### Cleanup following code
+
+```js
+const userData$ = Rx.Observable.ajax({
+    url: 'http://jsonplaceholder.typicode.com/users/1',
+    method: 'GET'
+});
+
+const click$ = Rx.Observable.fromEvent(document, 'click');
+
+click$.subscribe({
+    next: function(ev) {
+        userData$.subscribe(function(data) => {
+            console.log(data.response)
+        })
+    }
+})
+```
+
+Solution
+
+```js
+Rx.Observable.fromEvent(document, 'click');
+    .switchMap(Rx.Observable.ajax({
+        url: 'http://jsonplaceholder.typicode.com/users/1',
+        method: 'GET'
+    }))
+    .map(data => data.response)
+    .subscribe(data => {
+        console.log(data)
+    })
+```
+
+### Start/Stop timer
+
 One subscribe with two buttons
 
 ```html

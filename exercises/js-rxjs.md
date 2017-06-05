@@ -61,6 +61,27 @@ document.getElementById("myBtn").removeEventListener("click", onClick);
 
 ## Combine observables
 
+### Cleanup following code
+
+```js
+const userData$ = Rx.Observable.ajax({
+    url: 'http://jsonplaceholder.typicode.com/users/1',
+    method: 'GET'
+});
+
+const click$ = Rx.Observable.fromEvent(document, 'click');
+
+click$.subscribe({
+    next: function(ev) {
+        userData$.subscribe(function(data) => {
+            console.log(data.response)
+        })
+    }
+})
+```
+
+### Start/Stop timer
+
 Step1: One subscribe with two buttons
 
 ```html
