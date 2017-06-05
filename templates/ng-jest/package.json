@@ -26,19 +26,24 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "1.0.6",
+    "@angular/cli": "1.1.0",
     "@angular/compiler-cli": "^4.0.0",
     "@types/jest": "^19.2.3",
-    "@types/node": "~6.0.60",
-    "codelyzer": "~2.0.0",
+    "@types/node": "^7.0.27",
+    "codelyzer": "^3.0.1",
     "jest": "^20.0.4",
     "jest-preset-angular": "^2.0.2",
-    "ts-node": "~2.0.0",
-    "tslint": "~4.5.0",
-    "typescript": "~2.2.0"
+    "ngx-http-test": "^1.3.1",
+    "ts-node": "^3.0.4",
+    "tslint": "^5.4.2",
+    "typescript": "^2.3.4"
   },
   "jest": {
+    "verbose": false,
     "preset": "jest-preset-angular",
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupJest.ts"
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupJest.ts",
+    "transformIgnorePatterns": [
+      "node_modules/(?!@ngrx|ngx-http-test)"
+    ]
   }
 }
