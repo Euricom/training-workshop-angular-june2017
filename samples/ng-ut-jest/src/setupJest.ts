@@ -1,3 +1,5 @@
+import 'jest-preset-angular';
+
 const mock = () => {
   let storage = {};
   return {
@@ -13,3 +15,4 @@ Object.defineProperty(window, 'sessionStorage', {value: mock()});
 Object.defineProperty(window, 'getComputedStyle', {
   value: () => ['-webkit-appearance']
 });
+
