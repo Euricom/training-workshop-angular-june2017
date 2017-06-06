@@ -1,4 +1,4 @@
-import mailSystem from './mailsystem/mailSystem'
+import mailSystem from './mailSystem'
 
 const backend = {
   transfer(mails) {

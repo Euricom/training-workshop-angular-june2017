@@ -25,6 +25,6 @@
   },
   "jest": {
     "verbose": false,
-    "setupTestFrameworkScriptFile": "./test/setup-test-framework-script.js"
+    "setupTestFrameworkScriptFile": "./setupJest.js"
   }
 }
