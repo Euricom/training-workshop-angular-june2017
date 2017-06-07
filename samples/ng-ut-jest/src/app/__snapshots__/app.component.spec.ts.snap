@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppComponent should render correctly 1`] = `
+<app-root
+  title={[Function String]}
+>
+  <h1>
+    APP WORKS!!
+    <sample />
+  </h1>
+</app-root>
+`;

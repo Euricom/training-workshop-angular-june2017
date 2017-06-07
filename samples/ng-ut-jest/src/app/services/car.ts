@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core'
-import { Engine } from './engine'
+import { Injectable } from '@angular/core';
+import { Engine } from './engine';
 
 @Injectable()
 export class Car {

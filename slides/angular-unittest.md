@@ -371,6 +371,74 @@ With custom implementation
 jest.fn().mockImplementation(() => { throw new Error('bad') })
 ```
 
+----
+
+## Mock Functions
+### More examples
+
+```js
+// throw an error
+jest.fn().mockImplementation(() => { throw new Error('bad') })
+jest.fn(() => { throw new Error('bad') })
+
+// return a resolved promise
+jest.fn().mockImplementation(() => Promise.resolve(100)))
+jest.fn().mockReturnValue(Promise.resolve(100));
+jest.fn(() => Promise.resolve(100)))
+
+// return a rejected promise
+jest.fn(() => Promise.reject('bad bad')))
+
+// call a callback
+jest.fn(cb => cb(null, true));
+```
+
+----
+
+## Verify mock expectations
+
+```js
+const myMock = jest.fn();
+```
+
+```js
+// any
+myMock('1');
+expect(myMock).toHaveBeenCalled();
+expect(myMock).toHaveBeenCalledWith('1');
+expect(myMock).toHaveBeenCalledWith(expect.anything());
+expect(myMock).toHaveBeenCalledWith(expect.any(String));
+```
+
+```js
+// string matching
+const str = 'The quick brown fox...';
+myMock(str);
+expect(myMock).toHaveBeenCalledWith(expect.stringContaining('brown'));
+expect(myMock).toHaveBeenCalledWith(expect.stringMatching(/^The quick/));
+```
+
+```js
+// array containing
+const a = [1, 2, 3];
+myMock(a);
+expect(myMock).toHaveBeenCalledWith(expect.arrayContaining([1, 2]));
+expect(a).toEqual(expect.arrayContaining([1, 2]))
+```
+
+```js
+// object containing
+const obj = { name: 'john', id: 123 };
+myMock(obj);
+expect(myMock).toHaveBeenCalledWith(expect.objectContaining({
+    name: 'john',
+    id: expect.any(Number)
+}));
+expect(obj).toEqual(expect.objectContaining({ name: 'john' }))
+```
+
+----
+
 ## SnapShop Testing
 
 ```js
@@ -411,6 +479,88 @@ jest --updateSnapshot
 
 ----
 
+## Mock Dependency - single function
+
+A sample user repository
+
+```js
+// userRepo.js
+import { db } from './db'
+
+export class UserRepo {
+    findById(id) {
+        return db.query({ id }); // this call to the DB
+    }
+}
+```
+
+```js
+import { UserRepo } from './userRepo'
+import { db } from './db'
+
+test('userRepo', () => {
+    // arrange
+    const testUser = { id: 12, name: 'John' };
+    jest.spyOn(db, 'query').mockReturnValue(Promise.resolve(testUser))
+    const sut = new UserRepo();
+
+    // act
+    return sut.findById(12)
+        .then(user => {
+            // assert
+            expect(user.id).toBe(12);
+            expect(db.query).toHaveBeenCalledWith(12)
+        })
+})
+```
+
+----
+
+## Mock Dependency - import
+
+A sample user repository
+
+```js
+// userRepo.js
+import { db } from './db'
+import { eventBus } from './eventBus'
+
+export class UserRepo {
+    save(user) {
+        eventBus.publish('save', user)
+        return db.save(user); // this call to the DB
+    }
+}
+```
+
+You can mock an import completely
+
+```js
+import { UserRepo } from './userRepo'
+import { db } from './db'
+import { eventBus } from './eventBus'
+jest.mock('./userModel');
+jest.mock('./eventBus');
+
+test('userRepo', () => {
+
+    // arrange
+    const user = { id: 12, name: 'John' };
+    db.save.mockReturnValue(Promise.resolve(user))
+    const sut = new UserRepo();
+
+    // act
+    return sut.save(testUser)
+        .then(user => {
+            // assert
+            expect(db.save).toHaveBeenCalledWith(user)
+            expect(eventBus.publish).toHaveBeenCalledWith('save', user)
+        })
+})
+```
+
+----
+
 ## Jest vs Karma/Jasmine
 
 ```js
@@ -446,9 +596,18 @@ Start testing with
 4. RouteGuards
 5. RouteResolvers
 6. Services with http
-.
-.
-10. Components (but first extract most logic into service or POJ)
+7. ...
+8. ...
+9. Components (dumb components)
+10. Components (smart components) - This is hard to do!
+
+----
+
+# Golden rule
+
+> Keep your components on a diat
+
+Put all business logic (calculation, filtering, mapping, ...) in separated modules. If no dependencies to angular make it a plain old javascript modules (not a angular service).
 
 ----
 
@@ -667,6 +826,7 @@ describe('Blog Service', () => {
 ## Component testing
 
 ```js
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { AppComponent } from './app.component'
@@ -675,7 +835,9 @@ describe('AppComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-          declarations: [AppComponent]
+          declarations: [AppComponent],
+          // Tells the compiler not to error on unknown elements and attributes
+          schemas: [NO_ERRORS_SCHEMA]
         })
     })
 
@@ -692,6 +854,8 @@ describe('AppComponent', () => {
 })
 ```
 
+> Make sure you test your component in isolation
+
 ----
 
 ## Component testing - with snapshots
@@ -705,7 +869,8 @@ describe('AppComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-          declarations: [AppComponent]
+          declarations: [AppComponent],
+          schemas: [NO_ERRORS_SCHEMA]
         })
     })
 
@@ -729,7 +894,7 @@ Interact with the component
 const fixture = TestBed.createComponent(AppComponent)
 
 // spy on a method
-const onClick = sinon.spy(fixture.componentInstance, 'onIncrementClick')
+const onClick = jest.spyOn(fixture.componentInstance, 'onIncrementClick')
 
 // call method on the component
 fixture.componentInstance.onIncrementClick()
@@ -738,7 +903,7 @@ fixture.detectChanges()
 // trigger event on dom element
 const button = fixture.debugElement.query(By.css('.increment'))
 button.triggerEventHandler('click', {})
-expect(onIncrementClick.called).toEqual(true)
+expect(onClick).toHaveBeenCalled();
 ```
 
 > Remember the component based testing is slow and hard to do.
@@ -750,3 +915,4 @@ expect(onIncrementClick.called).toEqual(true)
 - [Testing Angular 2.0.x Services and Http with Jasmine and Karma](http://chariotsolutions.com/blog/post/testing-angular-2-0-x-services-http-jasmine-karma/)
 - [https://www.xfive.co/blog/testing-angular-faster-jest/](https://www.xfive.co/blog/testing-angular-faster-jest/)
 - [Angular CLI with Jest](https://github.com/angular/angular-cli/issues/4543)
+- [Three Ways to Test Angular Components](https://vsavkin.com/three-ways-to-test-angular-2-components-dcea8e90bd8d)

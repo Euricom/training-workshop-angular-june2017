@@ -70,8 +70,11 @@ describe('mainSystem', () => {
       mailSystem.transferMails(backend)
 
       // assert
-      expect(repository.getMails).toBeCalled()
-      expect(backend.transfer).toBeCalled()
+      expect(repository.getMails).toHaveBeenCalled()
+      expect(backend.transfer).toHaveBeenCalled()
+      // expect(backend.transfer).toHaveBeenCalledWith([
+      //   { id: 456, to: 'wim.vanhoye@euri.com', body: 'bbb...' },
+      // ])
       const filteredMails = backend.transfer.mock.calls[0][0]
       expect(filteredMails).toBeArrayOfSize(1)
       expect(filteredMails[0].id).toEqual(456)
