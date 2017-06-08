@@ -1,0 +1,53 @@
+{
+  "name": "angular-webpack-simple",
+  "version": "1.0.0",
+  "description": "Angular WebPack Simple",
+  "scripts": {
+    "cleanup": "rimraf build dist",
+    "serve": "npm run cleanup && webpack-dev-server --open --inline --hot --progress",
+    "build": "npm run cleanup && cross-env NODE_ENV=development webpack --progress",
+    "lint": "tslint src/**/*.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/router": "^4.0.0",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "^4.0.0",
+    "@types/node": "^7.0.15",
+    "angular-router-loader": "^0.6.0",
+    "angular2-template-loader": "^0.6.2",
+    "awesome-typescript-loader": "^3.1.3",
+    "codelyzer": "^3.0.1",
+    "compression-webpack-plugin": "^0.4.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^4.0.0",
+    "css-loader": "^0.28.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "html-loader": "^0.4.5",
+    "html-webpack-plugin": "^2.28.0",
+    "node-sass": "^4.5.2",
+    "raw-loader": "^0.5.1",
+    "rimraf": "^2.6.1",
+    "sass-loader": "^6.0.3",
+    "serve": "^5.1.4",
+    "style-loader": "^0.17.0",
+    "tslint": "^5.1.0",
+    "typescript": "^2.3.2",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}

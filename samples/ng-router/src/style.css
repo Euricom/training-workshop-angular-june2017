@@ -1,0 +1,7 @@
+body {
+    background: white;
+}
+
+.active-link {
+    background-color: lightgrey
+}
